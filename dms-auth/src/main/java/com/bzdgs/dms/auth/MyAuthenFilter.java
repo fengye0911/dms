@@ -19,11 +19,11 @@ public class MyAuthenFilter extends FormAuthenticationFilter {
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        if (httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
+        if (httpRequest.getMethod().equalsIgnoreCase("OPTIONS")) {
             setHeader(httpRequest,httpResponse);
             return true;
-//        }
-//        return super.preHandle(request,response);
+        }
+        return super.preHandle(request,response);
     }
 
     /**
@@ -49,7 +49,7 @@ public class MyAuthenFilter extends FormAuthenticationFilter {
         // 添加参数，允许指定域名和端口访问
         String origin = request.getHeader("Origin");
         if("http://localhost:6001".equalsIgnoreCase(origin)
-                ||"http://127.0.0.1".equalsIgnoreCase(origin)||"http://49.232.165.185".equalsIgnoreCase(origin)){
+                ||"http://127.0.0.1".equalsIgnoreCase(origin)){
             response.setHeader("Access-Control-Allow-Origin", origin);
         }
         // 这个allow-headers要配为*，这样才能允许所有的请求头

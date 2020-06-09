@@ -1,14 +1,9 @@
 package com.bzdgs.dms.filter;
 
-import com.bzdgs.dms.auth.MyAuthenFilter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.web.filter.DelegatingFilterProxy;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 
 import javax.servlet.Filter;
 
@@ -18,25 +13,6 @@ import javax.servlet.Filter;
  */
 @Configuration
 public class WebConfig {
-    /**
-     * 注册shiro代理过滤器
-     * @return
-     */
-    @Bean
-    public DelegatingFilterProxy getDelegatingFilterProxy(){
-        DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy(new MyAuthenFilter());
-        delegatingFilterProxy.setTargetFilterLifecycle(true);
-        delegatingFilterProxy.setTargetBeanName("shiroFilter");
-        return delegatingFilterProxy;
-    }
-
-    @Bean
-    public FilterRegistrationBean delegatingFilterProxy(){
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(getDelegatingFilterProxy());
-        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return filterRegistrationBean;
-    }
 
     @Bean
     public CorsFilter getCorsFilter(){
