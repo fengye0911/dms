@@ -5,17 +5,13 @@
     <parent>
         <artifactId>dms</artifactId>
         <groupId>com.bzdgs</groupId>
-        <version>1.0.0</version>
+        <version>${dms.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dms-sesurity</artifactId>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starer-security</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>

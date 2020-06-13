@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>com.bzdgs</groupId>
-            <artifactId>dms-auth</artifactId>
+            <artifactId>dms-sesurity</artifactId>
         </dependency>
 
         <!--jackson-->

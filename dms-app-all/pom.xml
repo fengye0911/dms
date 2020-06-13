@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.bzdgs</groupId>
-            <artifactId>dms-auth</artifactId>
+            <artifactId>dms-sesurity</artifactId>
         </dependency>
         <dependency>
             <groupId>com.bzdgs</groupId>
@@ -51,7 +51,7 @@
     <!--  以文件夹形式加载lib补丁升级包方式打包  第二版升级该方式 开始  -->
     <build>
         <!--打包后的项目名称-->
-        <finalName>dms-app-all</finalName>
+        <finalName>dms-app</finalName>
 
         <plugins>
             <plugin>
