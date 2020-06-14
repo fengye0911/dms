@@ -46,7 +46,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
         List<Permission> list = permissionMapper.findPermissionsByEmployeeId(id);
         Set<String> permissions = new HashSet<>();
         for (Permission p : list) {
-            permissions.add(p.getSn());
+            permissions.add(p.getUrl());
         }
         return permissions;
     }

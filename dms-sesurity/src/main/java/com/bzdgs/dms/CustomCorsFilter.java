@@ -1,5 +1,6 @@
 package com.bzdgs.dms;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -38,5 +39,11 @@ public class CustomCorsFilter extends CorsFilter {
         source.registerCorsConfiguration("/**", config);
 
         return source;
+    }
+
+    public static void main(String[] args) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("admin");
+        System.out.println(encode);
     }
 }

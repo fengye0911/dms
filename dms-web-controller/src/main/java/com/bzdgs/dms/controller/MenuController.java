@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @Author: BeLost_
  * @Description: TODO
@@ -27,7 +29,13 @@ public class MenuController {
     @PostMapping("/list")
     public AjaxResult list(@RequestBody MenuQuery menuQuery){
         PageList<Menu> pageList = menuService.page(menuQuery);
-        return AjaxResult.me().setResobj(pageList);
+            return AjaxResult.me().setResobj(pageList);
     }
+    @PostMapping("/page")
+    public AjaxResult menuall(){
+        List<Menu> menuByUserId = menuService.getMenuByUserId(1L);
+        return AjaxResult.me().setResobj(menuByUserId);
+    }
+
 
 }

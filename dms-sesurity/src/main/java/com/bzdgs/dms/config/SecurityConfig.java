@@ -2,7 +2,11 @@ package com.bzdgs.dms.config;
 
 import com.bzdgs.dms.CustomCorsFilter;
 import com.bzdgs.dms.endpoint.RestAuthenticationEntryPoint;
-import com.bzdgs.dms.provider.AjaxAuthenticationProvider;
+import com.bzdgs.dms.ajax.AjaxLoginProcessFilter;
+import com.bzdgs.dms.ajax.AjaxAuthenticationProvider;
+import com.bzdgs.dms.ajax.AjaxAuthenticationSuccessHandler;
+import com.bzdgs.dms.ajax.AjaxAwareAuthenticationFailureHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +34,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AjaxAuthenticationProvider ajaxAuthenticationProvider;
 
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AjaxAuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    private AjaxAwareAuthenticationFailureHandler failureHandler;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    protected AjaxLoginProcessFilter buildAjaxLoginProcessFilter(){
+        AjaxLoginProcessFilter ajaxLoginProcessFilter = new AjaxLoginProcessFilter("/login",
+                objectMapper,successHandler,failureHandler);
+        ajaxLoginProcessFilter.setAuthenticationManager(this.authenticationManager);
+        return ajaxLoginProcessFilter;
+    }
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -37,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(this.ajaxAuthenticationProvider);
     }
 
@@ -59,10 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**")
-                .authenticated()
+                .access("@MyRbacService.findAuthority(request,authentication)")
+//                .authenticated()
 
                 .and()
-                .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildAjaxLoginProcessFilter(),UsernamePasswordAuthenticationFilter.class);
 
 
     }

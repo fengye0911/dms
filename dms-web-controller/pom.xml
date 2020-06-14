@@ -15,10 +15,6 @@
             <groupId>com.bzdgs</groupId>
             <artifactId>dms-service</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.bzdgs</groupId>
-            <artifactId>dms-sesurity</artifactId>
-        </dependency>
 
         <!--jackson-->
         <dependency>

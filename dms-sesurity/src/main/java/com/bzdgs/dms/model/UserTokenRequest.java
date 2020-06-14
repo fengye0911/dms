@@ -4,21 +4,21 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserTokenRequest {
-    private String userName;
+    private String username;
     private String password;
 
     @JsonCreator
-    public UserTokenRequest(@JsonProperty("userName") String userName, @JsonProperty("password") String password){
-        this.userName = userName;
+    public UserTokenRequest(@JsonProperty("username") String username, @JsonProperty("password") String password){
+        this.username = username;
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
