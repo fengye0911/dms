@@ -1,5 +1,6 @@
 package com.bzdgs.dms.model.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.jsonwebtoken.Claims;
 
 /**
@@ -12,6 +13,7 @@ import io.jsonwebtoken.Claims;
 public class AccessJwtToken implements JwtToken {
     private final String rawToken;
 
+    @JsonIgnore
     private Claims claims;
 
     public AccessJwtToken(String rawToken,Claims claims){
@@ -21,5 +23,9 @@ public class AccessJwtToken implements JwtToken {
     @Override
     public String getToekn() {
         return this.rawToken;
+    }
+
+    public Claims getClaims() {
+        return claims;
     }
 }

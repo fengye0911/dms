@@ -28,6 +28,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    /**
+     * JWT TOKEN 头部授权参数KEY
+     */
+    public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
+
+    /**
+     * 身份认证入口
+     */
+    public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/auth/login";
+
+    /**
+     * 刷新token
+     */
+    public static final String TOKEN_REFRESH_ENTRY_POINT = "/auth/token";
+
+    /**
+     * 拦截路径，这里是将所有的路径进行拦截
+     */
+    public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/**";
     @Autowired
     private RestAuthenticationEntryPoint authenticationEntryPoint;
 
