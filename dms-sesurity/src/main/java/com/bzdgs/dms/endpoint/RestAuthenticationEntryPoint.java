@@ -1,6 +1,6 @@
 package com.bzdgs.dms.endpoint;
 
-import com.bzdgs.dms.ResponseEntity;
+import com.bzdgs.dms.resault.ResponseEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

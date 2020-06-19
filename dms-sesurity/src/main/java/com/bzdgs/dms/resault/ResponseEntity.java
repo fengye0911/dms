@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.bzdgs.dms;
+package com.bzdgs.dms.resault;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;

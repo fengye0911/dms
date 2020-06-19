@@ -6,6 +6,10 @@ import com.bzdgs.dms.ajax.AjaxLoginProcessFilter;
 import com.bzdgs.dms.ajax.AjaxAuthenticationProvider;
 import com.bzdgs.dms.ajax.AjaxAuthenticationSuccessHandler;
 import com.bzdgs.dms.ajax.AjaxAwareAuthenticationFailureHandler;
+import com.bzdgs.dms.jwt.JwtAuthenticationProcessFilter;
+import com.bzdgs.dms.jwt.JwtAuthenticationProvider;
+import com.bzdgs.dms.jwt.SkipPathRequestMatcher;
+import com.bzdgs.dms.jwt.extractor.TokenExtractor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +20,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ClassName: SecurityConfig.java
@@ -54,22 +63,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AjaxAuthenticationProvider ajaxAuthenticationProvider;
 
     @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
+
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private AjaxAuthenticationSuccessHandler successHandler;
+    private AuthenticationSuccessHandler successHandler;
 
     @Autowired
-    private AjaxAwareAuthenticationFailureHandler failureHandler;
+    private AuthenticationFailureHandler failureHandler;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private TokenExtractor tokenExtractor;
 
     protected AjaxLoginProcessFilter buildAjaxLoginProcessFilter(){
         AjaxLoginProcessFilter ajaxLoginProcessFilter = new AjaxLoginProcessFilter("/login",
                 objectMapper,successHandler,failureHandler);
         ajaxLoginProcessFilter.setAuthenticationManager(this.authenticationManager);
         return ajaxLoginProcessFilter;
+    }
+
+    protected JwtAuthenticationProcessFilter buildJwtAuthenticationProcessFilter(){
+        List<String> pathsToSkip = new ArrayList<>();
+        pathsToSkip.add(TOKEN_REFRESH_ENTRY_POINT);
+        pathsToSkip.add(FORM_BASED_LOGIN_ENTRY_POINT);
+
+        SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        JwtAuthenticationProcessFilter jwtAuthenticationProcessFilter = new JwtAuthenticationProcessFilter(failureHandler,tokenExtractor,matcher);
+        jwtAuthenticationProcessFilter.setAuthenticationManager(this.authenticationManager);
+        return jwtAuthenticationProcessFilter;
     }
     @Bean
     @Override
@@ -80,6 +106,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)  {
         auth.authenticationProvider(this.ajaxAuthenticationProvider);
+        auth.authenticationProvider(this.jwtAuthenticationProvider);
     }
 
     @Override
@@ -100,13 +127,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**")
-                .access("@MyRbacService.findAuthority(request,authentication)")
-//                .authenticated()
+//                .access("@MyRbacService.findAuthority(request,authentication)")
+                .authenticated()
 
                 .and()
                 .addFilterBefore(new CustomCorsFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(buildAjaxLoginProcessFilter(),UsernamePasswordAuthenticationFilter.class);
-
-
+                .addFilterBefore(buildAjaxLoginProcessFilter(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(buildJwtAuthenticationProcessFilter(),UsernamePasswordAuthenticationFilter.class);
     }
 }

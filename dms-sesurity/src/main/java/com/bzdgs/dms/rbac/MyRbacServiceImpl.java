@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ import java.util.Set;
  * @Date: 2020/6/14 20:36
  * @Vsersion: 1.0.0
  **/
-@Component("MyRbacService")
+//@Component("MyRbacService")
 public class MyRbacServiceImpl implements MyRbacService {
     @Autowired
     private IUserService userService;
@@ -31,9 +32,11 @@ public class MyRbacServiceImpl implements MyRbacService {
     @Override
     public boolean findAuthority(HttpServletRequest request, Authentication authentication) {
         boolean authority=false;
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = cookies[0];
+        String value = cookie.getValue();
         if (authentication.getPrincipal() instanceof UserContext){
             String username = ((UserContext) authentication.getPrincipal()).getUsername();
-            //根据username去数据库查询对应的url,这里就不查了
             User user = userService.getByUsername(username);
             Set<String> permissions = permissionService.findPermissionsByEmployeeId(user.getId());
 

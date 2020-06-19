@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
@@ -32,14 +34,14 @@ public class AjaxLoginProcessFilter extends AbstractAuthenticationProcessingFilt
      */
     private final ObjectMapper objectMapper;
 
-    private final AjaxAuthenticationSuccessHandler successHandler;
+    private final AuthenticationSuccessHandler successHandler;
 
-    private final AjaxAwareAuthenticationFailureHandler failureHandler;
+    private final AuthenticationFailureHandler failureHandler;
 
     public AjaxLoginProcessFilter(String defaultFilterProcessesUrl,
                                   final ObjectMapper objectMapper,
-                                  final AjaxAuthenticationSuccessHandler successHandler,
-                                  final AjaxAwareAuthenticationFailureHandler failureHandler) {
+                                  final AuthenticationSuccessHandler successHandler,
+                                  final AuthenticationFailureHandler failureHandler) {
         super(defaultFilterProcessesUrl);
         this.objectMapper = objectMapper;
         this.successHandler = successHandler;

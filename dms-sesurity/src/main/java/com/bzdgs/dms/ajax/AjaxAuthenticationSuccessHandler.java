@@ -1,10 +1,11 @@
 package com.bzdgs.dms.ajax;
 
-import com.bzdgs.dms.GeneratorResult;
-import com.bzdgs.dms.ResponseEntity;
+import com.bzdgs.dms.resault.GeneratorResult;
+import com.bzdgs.dms.resault.ResponseEntity;
 import com.bzdgs.dms.domain.Menu;
 import com.bzdgs.dms.domain.User;
 import com.bzdgs.dms.model.UserContext;
+import com.bzdgs.dms.model.token.JwtTokenFactory;
 import com.bzdgs.dms.service.IMenuService;
 import com.bzdgs.dms.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +37,6 @@ import java.util.Map;
 public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
-    private ObjectMapper mapper;
-
-    @Autowired
     private MessageSource messageSource;
 
     @Autowired
@@ -46,6 +44,17 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
     @Autowired
     private IUserService userService;
+
+    private final JwtTokenFactory tokenFactory;
+
+    private final ObjectMapper mapper;
+
+    @Autowired
+    public AjaxAuthenticationSuccessHandler(final JwtTokenFactory tokenFactory,
+                                            final ObjectMapper mapper){
+        this.mapper = mapper;
+        this.tokenFactory = tokenFactory;
+    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -57,11 +66,15 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         UserContext principal = (UserContext)authentication.getPrincipal();
         HashMap<String, Object> tokenMap = new HashMap<>();
         User user = userService.getByUsername(principal.getUsername());
+
+
         // 查询 对应的菜单
         List<Menu> menus = menuService.getMenuByUserId(user.getId());
         tokenMap.put("userId",user.getId());
         tokenMap.put("menus",menus);
         tokenMap.put("sessionId",request.getSession().getId());
+        tokenMap.put("token",tokenFactory.createAccessToken(principal));
+        tokenMap.put("refreshToken",tokenFactory.createRefreshToken(principal));
         resp.setData(tokenMap);
         try {
             resp.setMessage(messageSource.getMessage(resp.getFullCode(),null,resp.getMessage(), LocaleContextHolder.getLocale()));

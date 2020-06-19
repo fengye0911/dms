@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package com.bzdgs.dms;
+package com.bzdgs.dms.resault;
 
 import java.io.Serializable;
 

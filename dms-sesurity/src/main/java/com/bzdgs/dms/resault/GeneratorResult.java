@@ -1,4 +1,4 @@
-package com.bzdgs.dms;
+package com.bzdgs.dms.resault;
 
 import com.bzdgs.dms.enums.CommonEnumClass;
 import com.bzdgs.dms.enums.ResponseEnum;
@@ -19,7 +19,7 @@ public class GeneratorResult {
 	 * 日志对象
 	 */
 	private final static Logger logger = LoggerFactory.getLogger(GeneratorResult.class);
-	
+
 	/**
      * 组装通用的返回结果对象
      * @param succ
@@ -30,11 +30,11 @@ public class GeneratorResult {
      */
     public static <T> ResponseEntity<T> genResult(int succ, T data, String message) {
     	ResponseEntity<T> result = new ResponseEntity<T>(succ, message, data);
-        
+
         if (logger.isDebugEnabled()) {
         	logger.debug("generate rest result:{}", result);
         }
-        
+
         return result;
     }
 
@@ -55,11 +55,11 @@ public class GeneratorResult {
     }
 
     /**
-     * genResult:(创建通用返回结果). <br/> 
-     * @author hechu 
+     * genResult:(创建通用返回结果). <br/>
+     * @author hechu
      * @param succ
      * @param message
-     * @return 
+     * @return
      * @since JDK 1.7
      */
     public static ResponseEntity<String> genResult(int succ, String message) {
@@ -98,4 +98,3 @@ public class GeneratorResult {
         return genResult(ResponseEnum.FAIL.getCode(), null, ResponseEnum.FAIL.getMessage());
     }
 }
-  

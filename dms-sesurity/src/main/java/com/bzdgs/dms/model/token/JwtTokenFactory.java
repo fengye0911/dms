@@ -7,6 +7,7 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ import java.util.UUID;
  * @Date: 2020/6/14 22:29
  * @Vsersion: 1.0.0
  **/
+@Component
 public class JwtTokenFactory {
 
     private final JwtProperties jwtProperties;
@@ -35,7 +37,7 @@ public class JwtTokenFactory {
      * @param ctx
      * @return
      */
-    private AccessJwtToken createAccessToken(UserContext ctx){
+    public AccessJwtToken createAccessToken(UserContext ctx){
         Claims claims = Jwts.claims().setSubject(ctx.getUsername());
         LocalDateTime currentTime = LocalDateTime.now();
 

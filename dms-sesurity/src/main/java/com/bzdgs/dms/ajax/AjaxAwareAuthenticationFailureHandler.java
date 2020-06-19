@@ -2,8 +2,8 @@ package com.bzdgs.dms.ajax;
 
 
 import com.bzdgs.dms.enums.CommonEnumClass;
-import com.bzdgs.dms.GeneratorResult;
-import com.bzdgs.dms.ResponseEntity;
+import com.bzdgs.dms.resault.GeneratorResult;
+import com.bzdgs.dms.resault.ResponseEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

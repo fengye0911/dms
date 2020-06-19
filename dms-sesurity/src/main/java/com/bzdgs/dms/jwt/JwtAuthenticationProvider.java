@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  * @Date: 2020/6/15 22:25
  * @Vsersion: 1.0.0
  **/
+@Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     private final JwtProperties jwtProperties;

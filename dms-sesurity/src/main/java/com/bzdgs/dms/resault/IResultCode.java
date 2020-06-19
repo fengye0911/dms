@@ -1,4 +1,4 @@
-package com.bzdgs.dms;
+package com.bzdgs.dms.resault;
 
 /**
  * @ClassName: IResultCode
