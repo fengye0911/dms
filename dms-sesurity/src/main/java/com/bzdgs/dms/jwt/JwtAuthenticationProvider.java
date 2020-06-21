@@ -34,7 +34,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     }
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        RawAccessJwtToken token = (RawAccessJwtToken) authentication.getPrincipal();
+        RawAccessJwtToken token = (RawAccessJwtToken) authentication.getCredentials();
         //解析toekn
         Jws<Claims> claimsJws = token.parseClaims(this.jwtProperties.getTokenSigningKey());
         UserContext userContext = UserContext.create(claimsJws.getBody().getSubject(), new ArrayList<GrantedAuthority>());

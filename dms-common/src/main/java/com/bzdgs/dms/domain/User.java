@@ -47,20 +47,6 @@ public class User {
     private String comment;
     //状态
     private int state;
-    /*
-    *   id:'',
-                    username:null,
-                    realName:null,
-                    idCard: '',
-                    hireDate:'',
-                    birthDate: '',
-                    dept_id:'',
-                    gender:'',
-                    education_id:'',
-                    comment: '',
-                    address: '',
-                    phoneNum: ''
-    *
-    * */
+
 
 }

@@ -19,7 +19,7 @@ public class DicDetail{
     //证件名
     private String name;
     //证件类型
-    private Long type_id;
+    private Long typeId;
     // 嵌套查询  多对一
     private DicType dicType;
 

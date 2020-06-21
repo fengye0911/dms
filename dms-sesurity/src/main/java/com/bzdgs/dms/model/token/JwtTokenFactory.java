@@ -45,7 +45,7 @@ public class JwtTokenFactory {
                 .setIssuer(this.jwtProperties.getIssuer())
                 .setExpiration(Date.from(currentTime.plusMinutes(this.jwtProperties.getTokenExpirationTime())
                         .atZone(ZoneId.systemDefault()).toInstant()))
-                .signWith(SignatureAlgorithm.ES512,this.jwtProperties.getTokenSigningKey())
+                .signWith(SignatureAlgorithm.HS512,this.jwtProperties.getTokenSigningKey())
                 .compact();
 
         return new AccessJwtToken(token,claims);
@@ -61,7 +61,7 @@ public class JwtTokenFactory {
                 .setIssuer(this.jwtProperties.getIssuer())
                 .setExpiration(Date.from(currentTime.plusMinutes(this.jwtProperties.getRefreshTokenExpTime())
                         .atZone(ZoneId.systemDefault()).toInstant()))
-                .signWith(SignatureAlgorithm.ES512,this.jwtProperties.getTokenSigningKey())
+                .signWith(SignatureAlgorithm.HS512,this.jwtProperties.getTokenSigningKey())
                 .compact();
         return new AccessJwtToken(refreshToken,claims);
     }

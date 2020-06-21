@@ -73,8 +73,8 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
         tokenMap.put("userId",user.getId());
         tokenMap.put("menus",menus);
         tokenMap.put("sessionId",request.getSession().getId());
-        tokenMap.put("token",tokenFactory.createAccessToken(principal));
-        tokenMap.put("refreshToken",tokenFactory.createRefreshToken(principal));
+        tokenMap.put("token",tokenFactory.createAccessToken(principal).getToken());
+        tokenMap.put("refreshToken",tokenFactory.createRefreshToken(principal).getToken());
         resp.setData(tokenMap);
         try {
             resp.setMessage(messageSource.getMessage(resp.getFullCode(),null,resp.getMessage(), LocaleContextHolder.getLocale()));

@@ -13,5 +13,5 @@ public interface JwtToken {
      * 获取token
      * @return
      */
-    String getToekn();
+    String getToken();
 }

@@ -7,7 +7,7 @@
     <resultMap id="detailMap" type="com.bzdgs.dms.domain.DicDetail">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="type_id" column="type_id"/>
+        <result property="typeId" column="type_id"/>
         <association property="dicType" javaType="com.bzdgs.dms.domain.DicType" select="selectById" column="type_id">
             <result property="id" column="id"/>
             <result property="typeName" column="typeName"/>
@@ -27,11 +27,11 @@
         SELECT * FROM t_dictype WHERE id=#{id}
     </select>
 
-    <select id="selectDeptById" resultType="com.bzdgs.dms.domain.DicType">
+    <select id="selectDeptById" resultType="com.bzdgs.dms.domain.DicDetail">
         SELECT d.* FROM t_dicdetail d LEFT JOIN t_dictype t ON d.type_id = t.id where  t.id = 5
     </select>
 
-    <select id="selectUnitById" resultType="com.bzdgs.dms.domain.DicType">
+    <select id="selectUnitById" resultType="com.bzdgs.dms.domain.DicDetail">
         SELECT d.* FROM t_dicdetail d LEFT JOIN t_dictype t ON d.type_id = t.id where  t.id = 4
     </select>
 

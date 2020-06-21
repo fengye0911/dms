@@ -21,7 +21,7 @@ public class AccessJwtToken implements JwtToken {
         this.claims = claims;
     }
     @Override
-    public String getToekn() {
+    public String getToken() {
         return this.rawToken;
     }
 

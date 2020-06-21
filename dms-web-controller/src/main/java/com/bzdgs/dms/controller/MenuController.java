@@ -37,5 +37,20 @@ public class MenuController {
         return AjaxResult.me().setResobj(menuByUserId);
     }
 
+    @PostMapping("/save")
+    public AjaxResult save(@RequestBody Menu menu){
+        try {
+            if (menu.getId() != null){
+                menuService.update(menu);
+            }else {
+                menuService.insert(menu);
+            }
+            return AjaxResult.me().setMsg("保存成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return AjaxResult.me().setSuccess(false).setMsg("保存失败");
+    }
+
 
 }

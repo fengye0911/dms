@@ -48,12 +48,12 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return null;
+        return this.rawAccessJwtToken;
     }
 
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.userContext;
     }
 
     @Override

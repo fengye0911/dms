@@ -45,12 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 身份认证入口
      */
-    public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/auth/login";
+    public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/login";
 
     /**
      * 刷新token
      */
-    public static final String TOKEN_REFRESH_ENTRY_POINT = "/auth/token";
+    public static final String TOKEN_REFRESH_ENTRY_POINT = "/token";
 
     /**
      * 拦截路径，这里是将所有的路径进行拦截
